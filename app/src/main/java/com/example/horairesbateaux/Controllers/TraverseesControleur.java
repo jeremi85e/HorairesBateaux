@@ -1,7 +1,6 @@
 package com.example.horairesbateaux.Controllers;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.horairesbateaux.Models.Trajet;
 import com.example.horairesbateaux.Models.Traversee;
