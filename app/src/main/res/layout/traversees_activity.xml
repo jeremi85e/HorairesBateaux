@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.TraverseesActivity"
+    android:background="@color/colorGrisFonce">
+
+    <ImageButton
+        android:id="@+id/boutonJourSuivant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGrisTresFonce"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_right_black_50dp" />
+
+    <TextView
+        android:id="@+id/textViewTraversees"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:textColor="@color/colorBlanc"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/boutonJourSuivant"
+        app:layout_constraintEnd_toStartOf="@+id/boutonJourSuivant"
+        app:layout_constraintStart_toEndOf="@+id/boutonJourPrecedent"
+        app:layout_constraintTop_toTopOf="@+id/boutonJourSuivant"
+        android:background="@color/colorGrisTresFonce"/>
+
+    <ImageButton
+        android:id="@+id/boutonJourPrecedent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGrisTresFonce"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_left_black_50dp" />
+
+    <ListView
+        android:id="@+id/listviewTraversees"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="16dp"
+        android:divider="@color/colorGrisClair"
+        android:dividerHeight="1dip"
+        app:layout_constraintBottom_toTopOf="@+id/boutonRetour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTraversees" />
+
+    <Button
+        android:id="@+id/boutonRetour"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorGrisTresFonce"
+        android:padding="10dp"
+        android:text="Retour"
+        android:textColor="@color/colorBlanc"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

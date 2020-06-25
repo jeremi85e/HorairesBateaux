@@ -1,0 +1,15 @@
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-27 12:00:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-27 17:15:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-28 08:30:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-28 17:15:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-29 08:30:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-29 11:45:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-29 15:00:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-29 17:45:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-29 20:15:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-30 08:15:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-30 11:00:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-30 13:30:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-30 18:00:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-31 08:15:00.0',"Vendeenne",1,45,0);
+insert into traversees (datePassage, typeBateau, typeTrajet, tempsTraversee, trajetFacultatif) values ('2020-05-31 18:15:00.0',"Vendeenne",1,45,0);
