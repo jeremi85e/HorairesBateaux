@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.horairesbateaux.Controllers.TrajetControleur;
 import com.example.horairesbateaux.Controllers.TraverseesControleur;
 import com.example.horairesbateaux.Models.Trajet;
 import com.example.horairesbateaux.Models.Traversee;
@@ -29,6 +30,7 @@ import java.util.Date;
 public class AccueilActivity extends AppCompatActivity {
 
     TraverseesControleur traverseesControleur;
+    TrajetControleur trajetControleur;
     Spinner spinnerTrajets;
     EditText editDate;
     Button bouton;
@@ -41,12 +43,13 @@ public class AccueilActivity extends AppCompatActivity {
 
         Date dateDuJour = new Date();
         traverseesControleur = new TraverseesControleur(this);
+        trajetControleur = new TrajetControleur(this);
 
         spinnerTrajets = (Spinner) findViewById(R.id.spinner_trajets);
         editDate = (EditText) findViewById(R.id.editDate);
         bouton = (Button) findViewById(R.id.button);
 
-        spinnerTrajets.setAdapter(new ArrayAdapter<>(this, R.layout.trajets_spinner_item, traverseesControleur.getTrajets()));
+        spinnerTrajets.setAdapter(new ArrayAdapter<>(this, R.layout.trajets_spinner_item, trajetControleur.getTrajets()));
 
         editDate.setText(simpleDateFormat.format(dateDuJour));
 

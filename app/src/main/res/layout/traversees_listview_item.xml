@@ -15,7 +15,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,4 +44,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/logoCompagnie"
         app:layout_constraintStart_toEndOf="@+id/logoCompagnie"
         app:layout_constraintTop_toBottomOf="@+id/textViewHoraireDepart" />
+
+    <TextView
+        android:id="@+id/textViewNbPlacesRestantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/colorBlanc"
+        app:layout_constraintBottom_toBottomOf="@+id/logoCompagnie"
+        app:layout_constraintStart_toEndOf="@+id/textViewHoraireDepart"
+        app:layout_constraintTop_toTopOf="@+id/logoCompagnie" />
 </androidx.constraintlayout.widget.ConstraintLayout>

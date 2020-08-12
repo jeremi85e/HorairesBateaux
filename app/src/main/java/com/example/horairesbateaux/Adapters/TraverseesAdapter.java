@@ -1,6 +1,7 @@
 package com.example.horairesbateaux.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class TraverseesAdapter extends ArrayAdapter<Traversee> {
     public TraverseesAdapter(@NonNull Context context, ArrayList<Traversee> listetraverseeConstructeur) {
         super(context, 0 , listetraverseeConstructeur);
         mContext = context;
-        listetraversee = listetraverseeConstructeur;
+        this.listetraversee = listetraverseeConstructeur;
     }
 
     @NonNull
@@ -70,6 +71,8 @@ public class TraverseesAdapter extends ArrayAdapter<Traversee> {
             typeBateau.setText(currentTraversee.getTypeBateau());
         }
 
+        TextView messageDispo = (TextView) traverseesItem.findViewById(R.id.textViewNbPlacesRestantes);
+        messageDispo.setText(currentTraversee.getMessageDispo());
 
         return traverseesItem;
     }

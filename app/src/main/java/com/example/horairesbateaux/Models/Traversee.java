@@ -11,6 +11,7 @@ public class Traversee implements Parcelable, Comparable<Traversee> {
     private Trajet trajet;
     private int tempsTraversee;
     private boolean trajetFacultatif;
+    private String messageDispo;
 
     public Traversee(Date datePassage, String typeBateau, Trajet trajet, int tempsTraversee, boolean trajetFacultatif) {
         this.datePassage = datePassage;
@@ -18,6 +19,7 @@ public class Traversee implements Parcelable, Comparable<Traversee> {
         this.trajet = trajet;
         this.tempsTraversee = tempsTraversee;
         this.trajetFacultatif = trajetFacultatif;
+        messageDispo = "";
     }
 
     /////////////////Parcelable/////////////////
@@ -27,6 +29,7 @@ public class Traversee implements Parcelable, Comparable<Traversee> {
         trajet = in.readParcelable(Trajet.class.getClassLoader());
         tempsTraversee = in.readInt();
         trajetFacultatif = in.readInt() == 1;
+        messageDispo = "";
     }
 
     public static final Creator<Traversee> CREATOR = new Creator<Traversee>() {
@@ -80,6 +83,14 @@ public class Traversee implements Parcelable, Comparable<Traversee> {
 
     public void setTrajetFacultatif(boolean trajetFacultatif) {
         this.trajetFacultatif = trajetFacultatif;
+    }
+
+    public String getMessageDispo() {
+        return messageDispo;
+    }
+
+    public void setMessageDispo(String messageDispo) {
+        this.messageDispo = messageDispo;
     }
 
     @Override

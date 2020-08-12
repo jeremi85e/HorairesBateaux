@@ -26,14 +26,6 @@ public class TraverseesControleur {
         this.traverseesBase = traverseesBase;
     }
 
-    public Trajet getTrajet(int id){
-        return traverseesBase.getTrajet(id);
-    }
-
-    public ArrayList<Trajet> getTrajets(){
-        return traverseesBase.getTrajets();
-    }
-
     public ArrayList<Traversee> getTraverseesParJour(Date date, Trajet trajet){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return traverseesBase.getTraverseesParJour(dateFormat.format(date), trajet.getId());
