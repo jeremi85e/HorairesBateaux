@@ -21,15 +21,15 @@
         android:id="@+id/textViewTraversees"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:textSize="15sp"
-        android:textColor="@color/colorBlanc"
+        android:background="@color/colorGrisTresFonce"
         android:gravity="center"
+        android:textColor="@color/colorBlanc"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/boutonJourSuivant"
         app:layout_constraintEnd_toStartOf="@+id/boutonJourSuivant"
         app:layout_constraintStart_toEndOf="@+id/boutonJourPrecedent"
-        app:layout_constraintTop_toTopOf="@+id/boutonJourSuivant"
-        android:background="@color/colorGrisTresFonce"/>
+        app:layout_constraintTop_toTopOf="@+id/boutonJourSuivant" />
 
     <ImageButton
         android:id="@+id/boutonJourPrecedent"
@@ -56,6 +56,22 @@
         app:layout_constraintBottom_toTopOf="@+id/boutonRetour"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTraversees">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textViewListeVide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorBlanc"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/boutonRetour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTraversees" />
 
     <Button
@@ -75,4 +91,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

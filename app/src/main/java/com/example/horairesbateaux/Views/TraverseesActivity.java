@@ -39,6 +39,7 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
     ImageButton boutonJourSuivant;
     ListView listview;
     TextView textviewTraversees;
+    TextView textviewListeVide;
     Trajet trajetSouhaite;
     TraverseesControleur traverseesControleur;
     TrajetControleur trajetControleur;
@@ -67,6 +68,7 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
         boutonJourSuivant = (ImageButton) findViewById(R.id.boutonJourSuivant);
         listview = (ListView) findViewById(R.id.listviewTraversees);
         textviewTraversees = (TextView) findViewById(R.id.textViewTraversees);
+        textviewListeVide = (TextView) findViewById(R.id.textViewListeVide);
 
         //Récupération de l'intent
         Intent intent = getIntent();
@@ -209,48 +211,51 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
             }
 
             ArrayList<Traversee> listeTraversees = traverseesControleur.getTraverseesParJour(dateTraversees, trajetSouhaite);
-            Log.e("COUCOU", this.listNbPlacesRestantes.size() + "");
             for (ArrayList<String> arrayListNbPlacesRestantes : this.listNbPlacesRestantes) {
                 String heureTraversee = arrayListNbPlacesRestantes.get(1);
-                Log.e("COUCOU", arrayListNbPlacesRestantes.toString());
-                if (heureTraversee.length() % 2 == 1) {
-                    heureTraversee = "0" + heureTraversee.charAt(0) + ":" + heureTraversee.substring(1, 3);
-                } else {
-                    heureTraversee = heureTraversee.substring(0, 2) + ":" + heureTraversee.substring(2, 4);
-                }
-                Date dateNbPlacesRestantes = sdfDateHeure.parse(sdfDateTexte.format(dateTraversees) + " " + heureTraversee);
-                for (Traversee traversee : listeTraversees) {
-                    if (traversee.getDatePassage().equals(dateNbPlacesRestantes)){
-                        if (traversee.getTypeBateau().equals(arrayListNbPlacesRestantes.get(0))){ //if vendeenne
-                            if (arrayListNbPlacesRestantes.get(3).contains("Réservation fermée")){
-                                traversee.setMessageDispo("Réservations fermées");
-                            } else {
-                                if (arrayListNbPlacesRestantes.get(3).contains("COMPLET") || Integer.parseInt(arrayListNbPlacesRestantes.get(2)) == 0){
-                                    traversee.setMessageDispo("COMPLET !");
-                                } else {
-                                    traversee.setMessageDispo(Math.abs(Integer.parseInt(arrayListNbPlacesRestantes.get(2))) + " places restantes");
-                                }
-                            }
-                        } else { //if YC
-                            if (arrayListNbPlacesRestantes.get(0).equals("YC") && (traversee.getTypeBateau().equals("Catamaran") || traversee.getTypeBateau().equals("Insula"))){
+                if (!heureTraversee.equals("")) {
+                    textviewListeVide.setText("");
+                    if (heureTraversee.length() % 2 == 1) {
+                        heureTraversee = "0" + heureTraversee.charAt(0) + ":" + heureTraversee.substring(1, 3);
+                    } else {
+                        heureTraversee = heureTraversee.substring(0, 2) + ":" + heureTraversee.substring(2, 4);
+                    }
+                    Date dateNbPlacesRestantes = sdfDateHeure.parse(sdfDateTexte.format(dateTraversees) + " " + heureTraversee);
+                    for (Traversee traversee : listeTraversees) {
+                        if (traversee.getDatePassage().equals(dateNbPlacesRestantes)){
+                            if (traversee.getTypeBateau().equals(arrayListNbPlacesRestantes.get(0))){ //if vendeenne
                                 if (arrayListNbPlacesRestantes.get(3).contains("Réservation fermée")){
-                                    String[] splitPlacesRestantes = arrayListNbPlacesRestantes.get(3).split(" ");
-                                    if (Integer.parseInt(splitPlacesRestantes[0]) == 0) {
-                                        traversee.setMessageDispo("COMPLET !");
-                                    } else {
-                                        Log.e("COUCOUUUU", splitPlacesRestantes[0]);
-                                        traversee.setMessageDispo(splitPlacesRestantes[0] + " places restantes");
-                                    }
+                                    traversee.setMessageDispo("Réservations fermées");
                                 } else {
-                                    if (arrayListNbPlacesRestantes.get(3).contains("complète") || Integer.parseInt(arrayListNbPlacesRestantes.get(2)) == 0){
+                                    if (arrayListNbPlacesRestantes.get(3).contains("COMPLET") || Integer.parseInt(arrayListNbPlacesRestantes.get(2)) == 0){
                                         traversee.setMessageDispo("COMPLET !");
                                     } else {
                                         traversee.setMessageDispo(Math.abs(Integer.parseInt(arrayListNbPlacesRestantes.get(2))) + " places restantes");
                                     }
                                 }
+                            } else { //if YC
+                                if (arrayListNbPlacesRestantes.get(0).equals("YC") && (traversee.getTypeBateau().equals("Catamaran") || traversee.getTypeBateau().equals("Insula"))){
+                                    if (arrayListNbPlacesRestantes.get(3).contains("Réservation fermée")){
+                                        String[] splitPlacesRestantes = arrayListNbPlacesRestantes.get(3).split(" ");
+                                        if (Integer.parseInt(splitPlacesRestantes[0]) == 0) {
+                                            traversee.setMessageDispo("COMPLET !");
+                                        } else {
+                                            Log.e("COUCOUUUU", splitPlacesRestantes[0]);
+                                            traversee.setMessageDispo(splitPlacesRestantes[0] + " places restantes");
+                                        }
+                                    } else {
+                                        if (arrayListNbPlacesRestantes.get(3).contains("complète") || Integer.parseInt(arrayListNbPlacesRestantes.get(2)) == 0){
+                                            traversee.setMessageDispo("COMPLET !");
+                                        } else {
+                                            traversee.setMessageDispo(Math.abs(Integer.parseInt(arrayListNbPlacesRestantes.get(2))) + " places restantes");
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
+                } else {
+                    textviewListeVide.setText("Il n'y a aucune traversée de prévue ce jour ci !");
                 }
             }
             Collections.sort(listeTraversees);
