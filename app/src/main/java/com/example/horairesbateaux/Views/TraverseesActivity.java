@@ -212,6 +212,7 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
 
             ArrayList<Traversee> listeTraversees = traverseesControleur.getTraverseesParJour(dateTraversees, trajetSouhaite);
             for (ArrayList<String> arrayListNbPlacesRestantes : this.listNbPlacesRestantes) {
+                Log.e("COUCOU", arrayListNbPlacesRestantes.get(1));
                 String heureTraversee = arrayListNbPlacesRestantes.get(1);
                 if (!heureTraversee.equals("")) {
                     textviewListeVide.setText("");
@@ -240,7 +241,6 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
                                         if (Integer.parseInt(splitPlacesRestantes[0]) == 0) {
                                             traversee.setMessageDispo("COMPLET !");
                                         } else {
-                                            Log.e("COUCOUUUU", splitPlacesRestantes[0]);
                                             traversee.setMessageDispo(splitPlacesRestantes[0] + " places restantes");
                                         }
                                     } else {
@@ -256,6 +256,11 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
                     }
                 } else {
                     textviewListeVide.setText("Il n'y a aucune traversée de prévue ce jour ci !");
+                }
+            }
+            for (Traversee traversee : listeTraversees) {
+                if (traversee.getMessageDispo().equals("")) {
+                    traversee.setMessageDispo("ANNULÉ !");
                 }
             }
             Collections.sort(listeTraversees);
