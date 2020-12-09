@@ -51,14 +51,11 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
     TraverseesControleur traverseesControleur;
     TrajetControleur trajetControleur;
     Date dateTraversees;
+    ArrayList<ArrayList> listNbPlacesRestantes = new ArrayList<>();
     SimpleDateFormat sdfTextViewTraversees = new SimpleDateFormat("EEE dd/MM/yyyy", Locale.FRENCH);
     SimpleDateFormat sdfDateCollee = new SimpleDateFormat("yyyyMMdd", Locale.FRENCH);
     SimpleDateFormat sdfDateTexte = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
     SimpleDateFormat sdfDateHeure = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRENCH);
-
-    private float x1,x2;
-    static final int MIN_DISTANCE = 150;
-    private ArrayList<ArrayList> listNbPlacesRestantes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
