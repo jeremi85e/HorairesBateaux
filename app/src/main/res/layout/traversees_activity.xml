@@ -85,7 +85,7 @@
         android:layout_marginBottom="32dp"
         android:background="@color/colorGrisTresFonce"
         android:padding="10dp"
-        android:text="Retour"
+        android:text="@string/back"
         android:textColor="@color/colorBlanc"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

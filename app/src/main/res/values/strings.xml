@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Horaires Bateaux</string>
+    <string name="back">Retour</string>
+    <string name="dateLabel">Date :</string>
+    <string name="datePlaceholder">Date</string>
+    <string name="search">Rechercher</string>
+    <string name="trajetLabel">Trajet :</string>
 </resources>

@@ -26,67 +26,68 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AccueilActivity extends AppCompatActivity {
 
+    @BindView(R.id.boutonRecherche) Button boutonRecherche;
+    @BindView(R.id.spinner_trajets) Spinner spinnerTrajets;
+    @BindView(R.id.editDate) EditText editDate;
+
     TraverseesControleur traverseesControleur;
     TrajetControleur trajetControleur;
-    Spinner spinnerTrajets;
-    EditText editDate;
-    Button bouton;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.accueil_activity);
 
+        ButterKnife.bind(this);
+
         Date dateDuJour = new Date();
         traverseesControleur = new TraverseesControleur(this);
         trajetControleur = new TrajetControleur(this);
 
-        spinnerTrajets = (Spinner) findViewById(R.id.spinner_trajets);
-        editDate = (EditText) findViewById(R.id.editDate);
-        bouton = (Button) findViewById(R.id.button);
-
         spinnerTrajets.setAdapter(new ArrayAdapter<>(this, R.layout.trajets_spinner_item, trajetControleur.getTrajets()));
 
         editDate.setText(simpleDateFormat.format(dateDuJour));
+    }
 
-        editDate.setOnClickListener(new View.OnClickListener() {
+    @OnClick(R.id.editDate)
+    public void clickedOnSelectTrajet() {
+        final Calendar cldr = Calendar.getInstance();
+        int day = cldr.get(Calendar.DAY_OF_MONTH);
+        int month = cldr.get(Calendar.MONTH);
+        int year = cldr.get(Calendar.YEAR);
+
+        DatePickerDialog picker = new DatePickerDialog(AccueilActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                DatePickerDialog picker = new DatePickerDialog(AccueilActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        editDate.setText(new DecimalFormat("00").format(dayOfMonth) + "/" + new DecimalFormat("00").format(monthOfYear + 1) + "/" + year);
-                    }
-                }, year, month, day);
-                picker.show();
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                editDate.setText(new DecimalFormat("00").format(dayOfMonth) + "/" + new DecimalFormat("00").format(monthOfYear + 1) + "/" + year);
             }
-        });
+        }, year, month, day);
 
-        bouton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Date dateSouhaitee = simpleDateFormat.parse(editDate.getText() + "");
-                    Trajet trajetSouhaite = (Trajet) spinnerTrajets.getSelectedItem();
-                    ArrayList<Traversee> listeTraversees = traverseesControleur.getTraverseesParJour(dateSouhaitee, trajetSouhaite);
-                    Intent intent = new Intent().setClass(AccueilActivity.this, TraverseesActivity.class);
-                    intent.putExtra("listeTraversees", listeTraversees);
-                    intent.putExtra("trajet", trajetSouhaite);
-                    intent.putExtra("date", dateSouhaitee.getTime());
-                    startActivity(intent);
+        picker.show();
+    }
 
-                } catch (ParseException e){
-                    Log.e("Parse Exception", e.getMessage());
-                }
-            }
-        });
+    @OnClick(R.id.boutonRecherche)
+    public void clickedOnBoutonRecheche() {
+        try {
+            Date dateSouhaitee = simpleDateFormat.parse(editDate.getText() + "");
+            Trajet trajetSouhaite = (Trajet) spinnerTrajets.getSelectedItem();
+
+            Intent intent = new Intent().setClass(AccueilActivity.this, TraverseesActivity.class);
+            intent.putExtra("trajet", trajetSouhaite);
+            intent.putExtra("date", dateSouhaitee.getTime());
+
+            startActivity(intent);
+        } catch (ParseException e){
+            Log.e("Parse Exception", e.toString());
+        }
     }
 }

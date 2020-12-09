@@ -31,28 +31,34 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTouch;
 
 public class TraverseesActivity extends AppCompatActivity implements BateauxAsyncTask.Listeners {
 
-    Button boutonRetour;
-    ImageButton boutonJourPrecedent;
-    ImageButton boutonJourSuivant;
-    ListView listview;
-    TextView textviewTraversees;
-    TextView textviewListeVide;
+    @BindView(R.id.boutonRetour) Button boutonRetour;
+    @BindView(R.id.boutonJourPrecedent) ImageButton boutonJourPrecedent;
+    @BindView(R.id.boutonJourSuivant) ImageButton boutonJourSuivant;
+    @BindView(R.id.listviewTraversees) ListView listeViewTraversees;
+    @BindView(R.id.textViewTraversees) TextView textViewTraversees;
+    @BindView(R.id.textViewListeVide) TextView textViewListeVide;
+
     Trajet trajetSouhaite;
     TraverseesControleur traverseesControleur;
     TrajetControleur trajetControleur;
-    SimpleDateFormat sdfTextViewTraversees = new SimpleDateFormat("EEE dd/MM/yyyy");
-    SimpleDateFormat sdfDateCollee = new SimpleDateFormat("yyyyMMdd");
-    SimpleDateFormat sdfDateTexte = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat sdfDateHeure = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    Date dateTraversees;
+    SimpleDateFormat sdfTextViewTraversees = new SimpleDateFormat("EEE dd/MM/yyyy", Locale.FRENCH);
+    SimpleDateFormat sdfDateCollee = new SimpleDateFormat("yyyyMMdd", Locale.FRENCH);
+    SimpleDateFormat sdfDateTexte = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
+    SimpleDateFormat sdfDateHeure = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRENCH);
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    private Date dateTraversees;
-
-    private ArrayList<ArrayList> listNbPlacesRestantes = new ArrayList();
+    private ArrayList<ArrayList> listNbPlacesRestantes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,97 +66,81 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.traversees_activity);
 
-        traverseesControleur = new TraverseesControleur(this);
-        trajetControleur = new TrajetControleur(this);
+        ButterKnife.bind(this);
 
-        boutonRetour = (Button) findViewById(R.id.boutonRetour);
-        boutonJourPrecedent = (ImageButton) findViewById(R.id.boutonJourPrecedent);
-        boutonJourSuivant = (ImageButton) findViewById(R.id.boutonJourSuivant);
-        listview = (ListView) findViewById(R.id.listviewTraversees);
-        textviewTraversees = (TextView) findViewById(R.id.textViewTraversees);
-        textviewListeVide = (TextView) findViewById(R.id.textViewListeVide);
+        this.traverseesControleur = new TraverseesControleur(this);
+        this.trajetControleur = new TrajetControleur(this);
 
         //Récupération de l'intent
         Intent intent = getIntent();
-        final ArrayList<Traversee> listeTraversees = intent.getParcelableArrayListExtra("listeTraversees");
-        trajetSouhaite = intent.getParcelableExtra("trajet");
-        dateTraversees = new Date(intent.getLongExtra("date", 1));
-        Collections.sort(listeTraversees);
-        listview.setAdapter(new TraverseesAdapter(TraverseesActivity.this, listeTraversees));
-        StringBuilder dateTexte = new StringBuilder(sdfTextViewTraversees.format(dateTraversees));
-        dateTexte.setCharAt(0, Character.toUpperCase(dateTexte.charAt(0)));
-        textviewTraversees.setText(trajetSouhaite.toString() + " " + dateTexte);
+        this.trajetSouhaite = intent.getParcelableExtra("trajet");
+        this.dateTraversees = new Date(intent.getLongExtra("date", 1));
 
-        executeHttpRequests();
+        this.rechercheTraversees();
 
-        boutonJourPrecedent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ajoutJours(-1);
-                listNbPlacesRestantes = new ArrayList();
-                updateUI();
-            }
-        });
-
-        textviewTraversees.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (trajetSouhaite.getId() % 2 == 0){
-                    trajetSouhaite = trajetControleur.getTrajet(trajetSouhaite.getId() - 1);
-                } else {
-                    trajetSouhaite = trajetControleur.getTrajet(trajetSouhaite.getId() + 1);
-                }
-                listNbPlacesRestantes = new ArrayList();
-                updateUI();
-            }
-        });
-
-        boutonJourSuivant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ajoutJours(1);
-                listNbPlacesRestantes = new ArrayList();
-                updateUI();
-            }
-        });
-
-        listview.setOnTouchListener(new OnSwipeTouchListener(TraverseesActivity.this) {
+        listeViewTraversees.setOnTouchListener(new OnSwipeTouchListener(TraverseesActivity.this) {
             public void onSwipeRight() {
-                ajoutJours(-1);
-                listNbPlacesRestantes = new ArrayList();
-                updateUI();
+                clickedOnBoutonJourPrecedent();
             }
             public void onSwipeLeft() {
-                ajoutJours(1);
-                listNbPlacesRestantes = new ArrayList();
-                updateUI();
+                clickedOnBoutonJourSuivant();
             }
         });
 
-        boutonRetour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    }
 
+    private void rechercheTraversees() {
+        StringBuilder dateTexte = new StringBuilder(this.sdfTextViewTraversees.format(this.dateTraversees));
+        dateTexte.setCharAt(0, Character.toUpperCase(dateTexte.charAt(0)));
+        this.textViewTraversees.setText(this.trajetSouhaite.toString() + " " + dateTexte);
+
+        ArrayList<Traversee> listeTraversees = this.traverseesControleur.getTraverseesParJour(this.dateTraversees, this.trajetSouhaite);
+        Collections.sort(listeTraversees);
+        this.listeViewTraversees.setAdapter(new TraverseesAdapter(TraverseesActivity.this, listeTraversees));
+
+        this.executeHttpRequests();
+    }
+
+    @OnClick(R.id.boutonJourPrecedent)
+    public void clickedOnBoutonJourPrecedent() {
+        this.ajoutJours(-1);
+        this.listNbPlacesRestantes = new ArrayList<>();
+        this.rechercheTraversees();
+    }
+
+    @OnClick(R.id.boutonJourSuivant)
+    public void clickedOnBoutonJourSuivant() {
+        this.ajoutJours(1);
+        this.listNbPlacesRestantes = new ArrayList<>();
+        this.rechercheTraversees();
+    }
+
+    @OnClick(R.id.textViewTraversees)
+    public void clickedOnChangeTraversee() {
+        if (this.trajetSouhaite.getId() % 2 == 0){
+            this.trajetSouhaite = this.trajetControleur.getTrajet(this.trajetSouhaite.getId() - 1);
+        } else {
+            this.trajetSouhaite = this.trajetControleur.getTrajet(this.trajetSouhaite.getId() + 1);
+        }
+        this.listNbPlacesRestantes = new ArrayList<>();
+        this.rechercheTraversees();
+    }
+
+    @OnClick(R.id.boutonRetour)
+    public void clickedOnBoutonRetour() {
+        finish();
+    }
+
+    @OnTouch(R.id.listviewTraversees)
+    public void touchedOnListViewTraversees() {
+        finish();
     }
 
     private void ajoutJours(int nbJours) {
         Calendar c = Calendar.getInstance();
-        c.setTime(dateTraversees);
+        c.setTime(this.dateTraversees);
         c.add(Calendar.DATE, nbJours);
-        dateTraversees = c.getTime();
-    }
-
-    private void updateUI() {
-        StringBuilder dateTexte = new StringBuilder(sdfTextViewTraversees.format(dateTraversees));
-        dateTexte.setCharAt(0, Character.toUpperCase(dateTexte.charAt(0)));
-        textviewTraversees.setText(trajetSouhaite.toString() + " " + dateTexte);
-        ArrayList<Traversee> listeTraversees = traverseesControleur.getTraverseesParJour(dateTraversees, trajetSouhaite);
-        Collections.sort(listeTraversees);
-        listview.setAdapter(new TraverseesAdapter(TraverseesActivity.this, listeTraversees));
-        executeHttpRequests();
+        this.dateTraversees = c.getTime();
     }
 
     // ------------------
@@ -159,13 +149,13 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
 
     private void executeHttpRequests(){
         new BateauxAsyncTask(this).execute(
-                "https://resa-prod.yeu-continent.fr/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + trajetControleur.getIdVoyagesNbPlacesYC(trajetSouhaite),
+                "https://resa-prod.yeu-continent.fr/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + this.trajetControleur.getIdVoyagesNbPlacesYC(this.trajetSouhaite),
                 "https://resa-prod.yeu-continent.fr/ws/?&func=liste_dates&num_voyage=0",
-                "https://resa-prod.yeu-continent.fr/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + sdfDateCollee.format(dateTraversees),
+                "https://resa-prod.yeu-continent.fr/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + this.sdfDateCollee.format(this.dateTraversees),
                 "https://resa-prod.yeu-continent.fr/ws/?&func=liste_horaires&num_voyage=0&num_passage=0",
-                "https://resa-prod.compagnie-vendeenne.com/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + trajetControleur.getIdVoyagesNbPlacesVendeenne(trajetSouhaite),
+                "https://resa-prod.compagnie-vendeenne.com/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + this.trajetControleur.getIdVoyagesNbPlacesVendeenne(this.trajetSouhaite),
                 "https://resa-prod.compagnie-vendeenne.com/ws/?&func=liste_dates&num_voyage=0",
-                "https://resa-prod.compagnie-vendeenne.com/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + sdfDateCollee.format(dateTraversees),
+                "https://resa-prod.compagnie-vendeenne.com/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + this.sdfDateCollee.format(this.dateTraversees),
                 "https://resa-prod.compagnie-vendeenne.com/ws/?&func=liste_horaires&num_voyage=0&num_passage=0");
     }
 
@@ -210,18 +200,17 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
                 }
             }
 
-            ArrayList<Traversee> listeTraversees = traverseesControleur.getTraverseesParJour(dateTraversees, trajetSouhaite);
+            ArrayList<Traversee> listeTraversees = this.traverseesControleur.getTraverseesParJour(this.dateTraversees, this.trajetSouhaite);
             for (ArrayList<String> arrayListNbPlacesRestantes : this.listNbPlacesRestantes) {
-                Log.e("COUCOU", arrayListNbPlacesRestantes.get(1));
                 String heureTraversee = arrayListNbPlacesRestantes.get(1);
                 if (!heureTraversee.equals("")) {
-                    textviewListeVide.setText("");
+                    textViewListeVide.setText("");
                     if (heureTraversee.length() % 2 == 1) {
                         heureTraversee = "0" + heureTraversee.charAt(0) + ":" + heureTraversee.substring(1, 3);
                     } else {
                         heureTraversee = heureTraversee.substring(0, 2) + ":" + heureTraversee.substring(2, 4);
                     }
-                    Date dateNbPlacesRestantes = sdfDateHeure.parse(sdfDateTexte.format(dateTraversees) + " " + heureTraversee);
+                    Date dateNbPlacesRestantes = this.sdfDateHeure.parse(this.sdfDateTexte.format(this.dateTraversees) + " " + heureTraversee);
                     for (Traversee traversee : listeTraversees) {
                         if (traversee.getDatePassage().equals(dateNbPlacesRestantes)){
                             if (traversee.getTypeBateau().equals(arrayListNbPlacesRestantes.get(0))){ //if vendeenne
@@ -255,7 +244,7 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
                         }
                     }
                 } else {
-                    textviewListeVide.setText("Il n'y a aucune traversée de prévue ce jour ci !");
+                    textViewListeVide.setText("Il n'y a aucune traversée de prévue ce jour ci !");
                 }
             }
             for (Traversee traversee : listeTraversees) {
@@ -264,7 +253,7 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
                 }
             }
             Collections.sort(listeTraversees);
-            listview.setAdapter(new TraverseesAdapter(TraverseesActivity.this, listeTraversees));
+            listeViewTraversees.setAdapter(new TraverseesAdapter(TraverseesActivity.this, listeTraversees));
         } catch (JSONException e) {
             Log.e("TraverseesActivity", e.toString());
         } catch (ParseException e) {
