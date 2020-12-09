@@ -68,21 +68,36 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
         //Création des Traversées
         final InputStream[] tableauIS = {
-            //Yeu Continent
-                context.getResources().openRawResource(R.raw.sql_yc_janvier_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_fevrier_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_mars_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_avril_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_mai_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_juin_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_juillet_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_aout_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_septembre_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_octobre_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_novembre_2020),
-                context.getResources().openRawResource(R.raw.sql_yc_decembre_2020),
-            //Yeu Continent Horaires Facultatifs
-                context.getResources().openRawResource(R.raw.sql_yc_supplementaires_2020),
+            //Yeu Continent https://www.yeu-continent.fr/passages/
+                //2020
+                    context.getResources().openRawResource(R.raw.sql_yc_janvier_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_fevrier_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_mars_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_avril_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_mai_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_juin_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_juillet_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_aout_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_septembre_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_octobre_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_novembre_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_decembre_2020),
+                //2021
+                    context.getResources().openRawResource(R.raw.sql_yc_janvier_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_fevrier_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_mars_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_avril_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_mai_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_juin_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_juillet_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_aout_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_septembre_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_octobre_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_novembre_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_decembre_2021),
+                //Yeu Continent Horaires Facultatifs
+                    context.getResources().openRawResource(R.raw.sql_yc_supplementaires_2020),
+                    context.getResources().openRawResource(R.raw.sql_yc_supplementaires_2021),
             //Vendeenne Yeu --> Fromentine
                 context.getResources().openRawResource(R.raw.sql_vendeenne_yf_avril_2020),
                 context.getResources().openRawResource(R.raw.sql_vendeenne_yf_mai_2020),
@@ -120,18 +135,17 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 context.getResources().openRawResource(R.raw.sql_vendeenne_by_juillet_2020),
                 context.getResources().openRawResource(R.raw.sql_vendeenne_by_aout_2020)
         };
-        for (int i = 0; i < tableauIS.length; i++) {
+
+        for (InputStream inputStream : tableauIS) {
             try {
-                if (tableauIS[i] != null) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(tableauIS[i]));
-                    String str;
-                    while ((str = reader.readLine()) != null) {
-                        System.out.println(str);
-                        sqLiteDatabase.execSQL(str.trim());
-                    }
-                    reader.close();
-                    tableauIS[i].close();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String str;
+                while ((str = reader.readLine()) != null) {
+                    System.out.println(str);
+                    sqLiteDatabase.execSQL(str.trim());
                 }
+                reader.close();
+                inputStream.close();
             } catch (java.io.FileNotFoundException e) {
                 Log.e( "FileNotFoundException", e.getMessage());
             } catch (IOException e) {

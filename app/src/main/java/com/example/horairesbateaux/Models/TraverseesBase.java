@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class TraverseesBase {
 
     private String nomBase = "bdTraversees";
-    private Integer versionBase = 3;
+    private Integer versionBase = 28; // Toujours ajouter +1 lorsque je fais une MAJ sur la BD
     private MySQLiteOpenHelper accesBD;
     private SQLiteDatabase bd;
 
