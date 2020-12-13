@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.horairesbateaux.Controllers.MesTraverseesControleur;
 import com.example.horairesbateaux.Controllers.TrajetControleur;
 import com.example.horairesbateaux.Controllers.TraverseesControleur;
 import com.example.horairesbateaux.Models.Trajet;
@@ -40,6 +40,7 @@ public class AccueilActivity extends AppCompatActivity {
 
     TraverseesControleur traverseesControleur;
     TrajetControleur trajetControleur;
+    MesTraverseesControleur mesTraverseesControleur;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,10 @@ public class AccueilActivity extends AppCompatActivity {
         Date dateDuJour = new Date();
         traverseesControleur = new TraverseesControleur(this);
         trajetControleur = new TrajetControleur(this);
+        mesTraverseesControleur = new MesTraverseesControleur(this);
+
+        // Supprimer mesTraversees passées
+        this.deleteMesTraverseesPassees();
 
         spinnerTrajets.setAdapter(new ArrayAdapter<>(this, R.layout.trajets_spinner_item, trajetControleur.getTrajets()));
 
@@ -88,6 +93,21 @@ public class AccueilActivity extends AppCompatActivity {
             startActivity(intent);
         } catch (ParseException e){
             Log.e("Parse Exception", e.toString());
+        }
+    }
+
+    @OnClick(R.id.logoAppli)
+    public void clickedOnLogoAppli() {
+        Intent intent = new Intent().setClass(AccueilActivity.this, MesTraverseesActivity.class);
+        startActivity(intent);
+    }
+
+    public void deleteMesTraverseesPassees() {
+        ArrayList<Traversee> mesTraversees = this.mesTraverseesControleur.getMesTraversees();
+        for (Traversee traversee : mesTraversees) {
+            if (traversee.getDatePassage().before(new Date())) {
+                this.mesTraverseesControleur.deleteMaTraversee(traversee);
+            }
         }
     }
 }

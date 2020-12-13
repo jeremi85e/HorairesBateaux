@@ -19,7 +19,7 @@ public class Traversee implements Parcelable, Comparable<Traversee> {
         this.trajet = trajet;
         this.tempsTraversee = tempsTraversee;
         this.trajetFacultatif = trajetFacultatif;
-        messageDispo = "";
+        this.messageDispo = "";
     }
 
     /////////////////Parcelable/////////////////

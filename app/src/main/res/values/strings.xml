@@ -3,6 +3,20 @@
     <string name="back">Retour</string>
     <string name="dateLabel">Date :</string>
     <string name="datePlaceholder">Date</string>
+    <string name="deleteMaTraverseeQuestion">Voulez-vous supprimer la traversée %1$s prévue le %2$s à %3$s ?</string>
+    <string name="insertMaTraverseeQuestion">Voulez-vous ajouter la traversée %1$s prévue le %2$s à %3$s à vos traversées?</string>
+    <string name="listeMyTraverseesVide">Vous n\'avez aucune traversée de sauvegardée !</string>
+    <string name="listeTraverseesVide">"Il n'y a aucune traversée de prévue ce jour ci !"</string>
+    <string name="myTraversees">Mes Traversees</string>
+    <string name="non">Non</string>
+    <string name="oui">Oui</string>
+    <string name="placesRestantesTraversee">Il reste %1$s places sur cette traversée !</string>
+    <string name="recherche">Recherche du nombre de places restantes...</string>
     <string name="search">Rechercher</string>
     <string name="trajetLabel">Trajet :</string>
+    <string name="traverseeAjoutee">Traversee ajoutée</string>
+    <string name="traverseePasAjoutee">La traversée n\'a pas pu être ajoutée</string>
+    <string name="traverseePasSupprimee">La traversée n\'a pas pu être supprimée</string>
+    <string name="traverseeSupprimee">Traversee supprimée</string>
+    <string name="vendeenne">Vendéenne</string>
 </resources>

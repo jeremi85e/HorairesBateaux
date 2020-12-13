@@ -2,24 +2,27 @@ package com.example.horairesbateaux.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.horairesbateaux.Adapters.TraverseesAdapter;
+import com.example.horairesbateaux.Controllers.MesTraverseesControleur;
 import com.example.horairesbateaux.Controllers.TrajetControleur;
 import com.example.horairesbateaux.Controllers.TraverseesControleur;
 import com.example.horairesbateaux.Models.Trajet;
 import com.example.horairesbateaux.Models.Traversee;
 import com.example.horairesbateaux.R;
 import com.example.horairesbateaux.Utils.OnSwipeTouchListener;
-import com.example.horairesbateaux.Utils.BateauxAsyncTask;
+import com.example.horairesbateaux.Utils.TraverseesAsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,9 +39,9 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTouch;
+import butterknife.OnItemClick;
 
-public class TraverseesActivity extends AppCompatActivity implements BateauxAsyncTask.Listeners {
+public class TraverseesActivity extends AppCompatActivity implements TraverseesAsyncTask.Listeners {
 
     @BindView(R.id.boutonRetour) Button boutonRetour;
     @BindView(R.id.boutonJourPrecedent) ImageButton boutonJourPrecedent;
@@ -50,12 +53,15 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
     Trajet trajetSouhaite;
     TraverseesControleur traverseesControleur;
     TrajetControleur trajetControleur;
+    MesTraverseesControleur mesTraverseesControleur;
     Date dateTraversees;
     ArrayList<ArrayList> listNbPlacesRestantes = new ArrayList<>();
     SimpleDateFormat sdfTextViewTraversees = new SimpleDateFormat("EEE dd/MM/yyyy", Locale.FRENCH);
     SimpleDateFormat sdfDateCollee = new SimpleDateFormat("yyyyMMdd", Locale.FRENCH);
     SimpleDateFormat sdfDateTexte = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
+    SimpleDateFormat sdfHeureTexte = new SimpleDateFormat("HH:mm", Locale.FRENCH);
     SimpleDateFormat sdfDateHeure = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRENCH);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,7 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
         ButterKnife.bind(this);
 
         this.traverseesControleur = new TraverseesControleur(this);
+        this.mesTraverseesControleur = new MesTraverseesControleur(this);
         this.trajetControleur = new TrajetControleur(this);
 
         //Récupération de l'intent
@@ -94,6 +101,12 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
         ArrayList<Traversee> listeTraversees = this.traverseesControleur.getTraverseesParJour(this.dateTraversees, this.trajetSouhaite);
         Collections.sort(listeTraversees);
         this.listeViewTraversees.setAdapter(new TraverseesAdapter(TraverseesActivity.this, listeTraversees));
+
+        if (listeTraversees.isEmpty())  {
+            this.textViewListeVide.setText(getString(R.string.listeTraverseesVide));
+        } else {
+            this.textViewListeVide.setText("");
+        }
 
         this.executeHttpRequests();
     }
@@ -128,11 +141,6 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
         finish();
     }
 
-    @OnTouch(R.id.listviewTraversees)
-    public void touchedOnListViewTraversees() {
-        finish();
-    }
-
     private void ajoutJours(int nbJours) {
         Calendar c = Calendar.getInstance();
         c.setTime(this.dateTraversees);
@@ -140,12 +148,46 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
         this.dateTraversees = c.getTime();
     }
 
+    @OnItemClick(R.id.listviewTraversees)
+    public void onItemSelected(int position) {
+        Traversee traverseeSelectionnee = (Traversee) this.listeViewTraversees.getItemAtPosition(position);
+        creerModaleAjout(traverseeSelectionnee);
+    }
+
+    public void creerModaleAjout(Traversee traversee) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TraverseesActivity.this);
+
+        alertDialogBuilder.setTitle(getString(R.string.myTraversees));
+        alertDialogBuilder.setMessage(getString(R.string.insertMaTraverseeQuestion, traversee.getTrajet(), sdfDateTexte.format(traversee.getDatePassage()), sdfHeureTexte.format(traversee.getDatePassage())));
+
+        alertDialogBuilder.setPositiveButton(getString(R.string.oui),new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                insertTraversee(traversee);
+            }
+        });
+        alertDialogBuilder.setNegativeButton(getString(R.string.non),new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int id) {
+                dialog.cancel();
+            }
+        });
+
+        //create dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void insertTraversee(Traversee traversee) {
+        // TODO : Ajouter dans la base de données !
+        long nombreSuppr = this.mesTraverseesControleur.insertMaTraversee(traversee);
+        Toast.makeText(TraverseesActivity.this, getString(R.string.traverseeAjoutee), Toast.LENGTH_LONG).show();
+    }
+
     // ------------------
     //  HTTP REQUEST
     // ------------------
 
     private void executeHttpRequests(){
-        new BateauxAsyncTask(this).execute(
+        new TraverseesAsyncTask(this).execute(
                 "https://resa-prod.yeu-continent.fr/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + this.trajetControleur.getIdVoyagesNbPlacesYC(this.trajetSouhaite),
                 "https://resa-prod.yeu-continent.fr/ws/?&func=liste_dates&num_voyage=0",
                 "https://resa-prod.yeu-continent.fr/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + this.sdfDateCollee.format(this.dateTraversees),
@@ -240,8 +282,6 @@ public class TraverseesActivity extends AppCompatActivity implements BateauxAsyn
                             }
                         }
                     }
-                } else {
-                    textViewListeVide.setText("Il n'y a aucune traversée de prévue ce jour ci !");
                 }
             }
             for (Traversee traversee : listeTraversees) {

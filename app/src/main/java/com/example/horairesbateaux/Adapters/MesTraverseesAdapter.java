@@ -1,7 +1,6 @@
 package com.example.horairesbateaux.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +18,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-public class TraverseesAdapter extends ArrayAdapter<Traversee> {
+public class MesTraverseesAdapter extends ArrayAdapter<Traversee> {
 
     private Context mContext;
     private ArrayList<Traversee> listetraversee;
 
     static final long ONE_MINUTE_IN_MILLIS=60000;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat jourFormat = new SimpleDateFormat("EEEE dd/MM/yyyy", Locale.FRENCH);
     String horaires;
 
-    public TraverseesAdapter(@NonNull Context context, ArrayList<Traversee> listetraverseeConstructeur) {
+    public MesTraverseesAdapter(@NonNull Context context, ArrayList<Traversee> listetraverseeConstructeur) {
         super(context, 0 , listetraverseeConstructeur);
         mContext = context;
         this.listetraversee = listetraverseeConstructeur;
@@ -41,7 +42,7 @@ public class TraverseesAdapter extends ArrayAdapter<Traversee> {
         View traverseesItem = convertView;
 
         if(traverseesItem == null) {
-            traverseesItem = LayoutInflater.from(mContext).inflate(R.layout.traversees_listview_item, parent, false);
+            traverseesItem = LayoutInflater.from(mContext).inflate(R.layout.mes_traversees_listview_item, parent, false);
         }
 
         Traversee currentTraversee = listetraversee.get(position);
@@ -58,11 +59,19 @@ public class TraverseesAdapter extends ArrayAdapter<Traversee> {
         dateCalendar.setTime(currentTraversee.getDatePassage());
         Date dateArrivee = new Date(dateCalendar.getTimeInMillis() + (currentTraversee.getTempsTraversee() * ONE_MINUTE_IN_MILLIS));
         if (currentTraversee.isTrajetFacultatif()){
-            horaires = "(" + simpleDateFormat.format(currentTraversee.getDatePassage()) + " --> " + simpleDateFormat.format(dateArrivee) + ")";
+            horaires = "(" + heureFormat.format(currentTraversee.getDatePassage()) + " --> " + heureFormat.format(dateArrivee) + ")";
         } else {
-            horaires = simpleDateFormat.format(currentTraversee.getDatePassage()) + " --> " + simpleDateFormat.format(dateArrivee);
+            horaires = heureFormat.format(currentTraversee.getDatePassage()) + " --> " + heureFormat.format(dateArrivee);
         }
         horaireDepart.setText(horaires);
+
+        TextView jourDepart = (TextView) traverseesItem.findViewById(R.id.textViewJourDepart);
+        StringBuilder jour = new StringBuilder(jourFormat.format(currentTraversee.getDatePassage()));
+        jour.setCharAt(0, Character.toUpperCase(jour.charAt(0)));
+        jourDepart.setText(jour);
+
+        TextView trajet = (TextView) traverseesItem.findViewById(R.id.textViewTrajet);
+        trajet.setText(currentTraversee.getTrajet().toString());
 
         TextView typeBateau = (TextView) traverseesItem.findViewById(R.id.textViewTypeBateau);
         if (currentTraversee.getTypeBateau().equals("Vendeenne")){
@@ -70,9 +79,6 @@ public class TraverseesAdapter extends ArrayAdapter<Traversee> {
         } else {
             typeBateau.setText(currentTraversee.getTypeBateau());
         }
-
-        TextView messageDispo = (TextView) traverseesItem.findViewById(R.id.textViewNbPlacesRestantes);
-        messageDispo.setText(currentTraversee.getMessageDispo());
 
         return traverseesItem;
     }

@@ -2,19 +2,19 @@ package com.example.horairesbateaux.Controllers;
 
 import android.content.Context;
 
-import com.example.horairesbateaux.Models.MaBase;
 import com.example.horairesbateaux.Models.Trajet;
 import com.example.horairesbateaux.Models.Traversee;
+import com.example.horairesbateaux.Models.MaBase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TraverseesControleur {
+public class MesTraverseesControleur {
     private MaBase maBase;
 
-    public TraverseesControleur(Context context){
+    public MesTraverseesControleur(Context context){
         maBase = new MaBase(context);
     }
 
@@ -26,8 +26,15 @@ public class TraverseesControleur {
         this.maBase = maBase;
     }
 
-    public ArrayList<Traversee> getTraverseesParJour(Date date, Trajet trajet){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return maBase.getTraverseesParJour(dateFormat.format(date), trajet.getId());
+    public ArrayList<Traversee> getMesTraversees(){
+        return maBase.getMesTraversees();
+    }
+
+    public int deleteMaTraversee(Traversee maTraversee){
+        return maBase.deleteMaTraversee(maTraversee);
+    }
+
+    public long insertMaTraversee(Traversee maTraversee){
+        return maBase.insertMaTraversee(maTraversee);
     }
 }

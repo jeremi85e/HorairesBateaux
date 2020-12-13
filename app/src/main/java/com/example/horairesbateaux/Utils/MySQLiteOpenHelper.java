@@ -31,6 +31,14 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             + "trajetFacultatif INTEGER NOT NULL,"
             + "PRIMARY KEY (datePassage, typeBateau, typeTrajet));";
 
+    private String creationMesTraversees = "create table if not exists mesTraversees ("
+            + "datePassage DATETIME NOT NULL,"
+            + "typeBateau TEXT NOT NULL,"
+            + "typeTrajet INTERGER NOT NULL,"
+            + "tempsTraversee INTEGER NOT NULL,"
+            + "trajetFacultatif INTEGER NOT NULL,"
+            + "PRIMARY KEY (datePassage, typeBateau, typeTrajet));";
+
 
     private String trajetYeuFrom = "insert into trajets (id, portDepart, portArrivee) values "
             + "(1,\"Yeu\",\"Fromentine\");";
@@ -45,6 +53,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     private String trajetBarbatreYeu = "insert into trajets (id, portDepart, portArrivee) values "
             + "(6,\"Barbâtre\",\"Yeu\");";
 
+
     public MySQLiteOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
         this.context = context;
@@ -53,11 +62,13 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        //!!!!!!!!!! NE PAS OUBLIER DE CHANGER LA VERSION DE LA BASE DANS TraverseesBase !!!!!!!!!!
+        //!!!!!!!!!! NE PAS OUBLIER DE CHANGER LA VERSION DE LA BASE DANS MaBase !!!!!!!!!!
 
         //Création des Tables
         sqLiteDatabase.execSQL(creationTraversees);
         sqLiteDatabase.execSQL(creationTrajets);
+        sqLiteDatabase.execSQL(creationMesTraversees);
+
         //Création des Trajets
         sqLiteDatabase.execSQL(trajetYeuFrom);
         sqLiteDatabase.execSQL(trajetFromYeu);
@@ -141,7 +152,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                 String str;
                 while ((str = reader.readLine()) != null) {
-                    System.out.println(str);
+                    Log.e("ERREUR", str);
                     sqLiteDatabase.execSQL(str.trim());
                 }
                 reader.close();

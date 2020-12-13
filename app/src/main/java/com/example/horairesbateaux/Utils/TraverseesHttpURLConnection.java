@@ -10,7 +10,7 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class BateauxHttpURLConnection {
+public class TraverseesHttpURLConnection {
 
     public static String startHttpRequest(String urlString1, String urlString2, String urlString3, String urlString4, String urlString5, String urlString6, String urlString7, String urlString8){
 
@@ -165,7 +165,7 @@ public class BateauxHttpURLConnection {
             Log.e("AsyncTask", stringBuilderFinal.toString());
 
         } catch (Exception e){
-            Log.e("BateauxHttpURLConnect", e.toString());
+            Log.e("TraverseesHttpURLConnec", e.toString());
         }
 
         return stringBuilderFinal.toString();

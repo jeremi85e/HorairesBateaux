@@ -2,36 +2,32 @@ package com.example.horairesbateaux.Controllers;
 
 import android.content.Context;
 
+import com.example.horairesbateaux.Models.MaBase;
 import com.example.horairesbateaux.Models.Trajet;
-import com.example.horairesbateaux.Models.Traversee;
-import com.example.horairesbateaux.Models.TraverseesBase;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TrajetControleur {
-    private TraverseesBase traverseesBase;
+    private MaBase maBase;
 
     public TrajetControleur(Context context){
-        traverseesBase = new TraverseesBase(context);
+        maBase = new MaBase(context);
     }
 
-    public TraverseesBase getTraverseesBase() {
-        return traverseesBase;
+    public MaBase getMaBase() {
+        return maBase;
     }
 
-    public void setTraverseesBase(TraverseesBase traverseesBase) {
-        this.traverseesBase = traverseesBase;
+    public void setMaBase(MaBase maBase) {
+        this.maBase = maBase;
     }
 
     public Trajet getTrajet(int id){
-        return traverseesBase.getTrajet(id);
+        return maBase.getTrajet(id);
     }
 
     public ArrayList<Trajet> getTrajets(){
-        return traverseesBase.getTrajets();
+        return maBase.getTrajets();
     }
 
     public String getIdVoyagesNbPlacesVendeenne(Trajet trajet){

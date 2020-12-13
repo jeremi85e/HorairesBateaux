@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/logoCompagnie"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewJourDepart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/colorBlanc"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTrajet"
+        app:layout_constraintStart_toEndOf="@+id/logoCompagnie"
+        app:layout_constraintTop_toTopOf="@+id/logoCompagnie" />
+
+    <TextView
+        android:id="@+id/textViewHoraireDepart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/colorBlanc"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewJourDepart"
+        app:layout_constraintStart_toEndOf="@+id/textViewJourDepart"
+        app:layout_constraintTop_toTopOf="@+id/textViewJourDepart" />
+
+    <TextView
+        android:id="@+id/textViewTrajet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/colorBlanc"
+        app:layout_constraintBottom_toBottomOf="@+id/logoCompagnie"
+        app:layout_constraintStart_toEndOf="@+id/logoCompagnie"
+        app:layout_constraintTop_toBottomOf="@id/textViewJourDepart" />
+
+    <TextView
+        android:id="@+id/textViewTypeBateau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/colorBlanc"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTrajet"
+        app:layout_constraintStart_toEndOf="@+id/textViewTrajet"
+        app:layout_constraintTop_toTopOf="@+id/textViewTrajet" />
+</androidx.constraintlayout.widget.ConstraintLayout>
