@@ -175,7 +175,7 @@ public class MesTraverseesActivity extends AppCompatActivity implements MesTrave
                     JSONObject jsonTraversee = listeHoraires.getJSONObject(i);
                     if (!jsonTraversee.getString("heure_depart").isEmpty()){
                         if (sdfPetiteHeureTexte.format(this.traverseeSelectionnee.getDatePassage()).equals(jsonTraversee.getString("heure_depart"))){
-                            placesRestantes = jsonTraversee.getString("places_dispos");
+                            placesRestantes = getPlacesRestantesByTraversee(jsonTraversee);
                             this.alertDialog.cancel();
                             this.creerModalePlacesRestantes(placesRestantes);
                         }
@@ -183,7 +183,7 @@ public class MesTraverseesActivity extends AppCompatActivity implements MesTrave
                 }
             }
         } catch (JSONException e) {
-            Log.e("TraverseesActivity", e.toString());
+            Log.e("MesTraverseesActivity", e.toString());
         }
     }
 
@@ -195,5 +195,41 @@ public class MesTraverseesActivity extends AppCompatActivity implements MesTrave
 
         AlertDialog alertDialogPlaces = alertDialogBuilderPlaces.create();
         alertDialogPlaces.show();
+    }
+
+    public String getPlacesRestantesByTraversee(JSONObject jsonTraversee) {
+        String placesRestantes = "";
+        try {
+            if (traverseeSelectionnee.getTypeBateau() != "Vendeenne") {
+                if (jsonTraversee.getString("texte_dispo").contains("Réservation fermée")){
+                    String[] splitPlacesRestantes = jsonTraversee.getString("texte_dispo").split(" ");
+                    if (Integer.parseInt(splitPlacesRestantes[0]) == 0) {
+                        placesRestantes = "COMPLET !";
+                    } else {
+                        placesRestantes = splitPlacesRestantes[0] + " places restantes";
+                    }
+                } else {
+                    if (jsonTraversee.getString("texte_dispo").contains("complète") || Integer.parseInt(jsonTraversee.getString("places_dispos")) == 0){
+                        placesRestantes = "COMPLET !";
+                    } else {
+                        placesRestantes = Math.abs(Integer.parseInt(jsonTraversee.getString("places_dispos"))) + " places restantes";
+                    }
+                }
+            } else {
+                if (jsonTraversee.getString("texte_dispo").contains("Réservation fermée")){
+                    placesRestantes = "Réservations fermées";
+                } else {
+                    if (jsonTraversee.getString("texte_dispo").contains("COMPLET") || Integer.parseInt(jsonTraversee.getString("places_dispos")) == 0){
+                        placesRestantes = "COMPLET !";
+                    } else {
+                        placesRestantes = Math.abs(Integer.parseInt(jsonTraversee.getString("places_dispos"))) + " places restantes";
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("MesTraverseesActivity", e.toString());
+        }
+
+        return placesRestantes;
     }
 }
