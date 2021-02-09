@@ -16,7 +16,7 @@ import java.util.Locale;
 public class MaBase {
 
     private String nomBase = "bdTraversees";
-    private Integer versionBase = 32; // Toujours ajouter +1 lorsque je fais une MAJ sur la BD
+    private Integer versionBase = 34; // Toujours ajouter +1 lorsque je fais une MAJ sur la BD
     private MySQLiteOpenHelper accesBD;
     private SQLiteDatabase bd;
     private SimpleDateFormat sdfDateSqlite = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S", Locale.FRENCH);
