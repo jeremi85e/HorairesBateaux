@@ -106,9 +106,23 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                     context.getResources().openRawResource(R.raw.sql_yc_octobre_2021),
                     context.getResources().openRawResource(R.raw.sql_yc_novembre_2021),
                     context.getResources().openRawResource(R.raw.sql_yc_decembre_2021),
+                //2022
+                    context.getResources().openRawResource(R.raw.sql_yc_janvier_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_fevrier_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_mars_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_avril_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_mai_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_juin_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_juillet_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_aout_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_septembre_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_octobre_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_novembre_2022),
+                    context.getResources().openRawResource(R.raw.sql_yc_decembre_2022),
                 //Yeu Continent Horaires Facultatifs
                     context.getResources().openRawResource(R.raw.sql_yc_supplementaires_2020),
                     context.getResources().openRawResource(R.raw.sql_yc_supplementaires_2021),
+                    context.getResources().openRawResource(R.raw.sql_yc_supplementaires_2022),
 
             // Vendeenne https://www.compagnie-vendeenne.com/fr/port-joinville
                 //Yeu --> Fromentine
@@ -128,6 +142,15 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yf_aout_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yf_septembre_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yf_octobre_2021),
+                    //2022
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_avril_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_mai_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_juin_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_juillet_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_aout_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_septembre_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_octobre_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yf_novembre_2022),
                 //Fromentine --> Yeu
                     //2020
                         context.getResources().openRawResource(R.raw.sql_vendeenne_fy_avril_2020),
@@ -145,6 +168,15 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                         context.getResources().openRawResource(R.raw.sql_vendeenne_fy_aout_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_fy_septembre_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_fy_octobre_2021),
+                    //2022
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_avril_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_mai_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_juin_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_juillet_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_aout_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_septembre_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_octobre_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_fy_novembre_2022),
                 //Yeu --> Saint Gilles
                     // 2020
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yg_avril_2020),
@@ -160,6 +192,13 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yg_juillet_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yg_aout_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yg_septembre_2021),
+                    // 2021
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yg_avril_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yg_mai_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yg_juin_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yg_juillet_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yg_aout_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yg_septembre_2022),
                 //Saint Gilles --> Yeu
                     // 2020
                         context.getResources().openRawResource(R.raw.sql_vendeenne_gy_avril_2020),
@@ -175,6 +214,13 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                         context.getResources().openRawResource(R.raw.sql_vendeenne_gy_juillet_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_gy_aout_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_gy_septembre_2021),
+                    // 2021
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_gy_avril_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_gy_mai_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_gy_juin_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_gy_juillet_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_gy_aout_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_gy_septembre_2022),
                 //Yeu --> Barbatre
                     // 2020
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yb_juillet_2020),
@@ -182,13 +228,19 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                     // 2021
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yb_juillet_2021),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_yb_aout_2021),
+                    // 2021
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yb_juillet_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_yb_aout_2022),
                 //Barbatre --> Yeu
                     // 2020
                         context.getResources().openRawResource(R.raw.sql_vendeenne_by_juillet_2020),
                         context.getResources().openRawResource(R.raw.sql_vendeenne_by_aout_2020),
                     // 2021
                         context.getResources().openRawResource(R.raw.sql_vendeenne_by_juillet_2021),
-                        context.getResources().openRawResource(R.raw.sql_vendeenne_by_aout_2021)
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_by_aout_2021),
+                    // 2021
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_by_juillet_2022),
+                        context.getResources().openRawResource(R.raw.sql_vendeenne_by_aout_2022)
         };
 
         for (InputStream inputStream : tableauIS) {

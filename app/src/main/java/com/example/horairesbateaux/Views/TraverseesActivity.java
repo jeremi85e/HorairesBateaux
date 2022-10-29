@@ -188,10 +188,10 @@ public class TraverseesActivity extends AppCompatActivity implements TraverseesA
 
     private void executeHttpRequests(){
         new TraverseesAsyncTask(this).execute(
-                "https://resa-prod.yeu-continent.fr/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + this.trajetControleur.getIdVoyagesNbPlacesYC(this.trajetSouhaite),
-                "https://resa-prod.yeu-continent.fr/ws/?&func=liste_dates&num_voyage=0",
-                "https://resa-prod.yeu-continent.fr/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + this.sdfDateCollee.format(this.dateTraversees),
-                "https://resa-prod.yeu-continent.fr/ws/?&func=liste_horaires&num_voyage=0&num_passage=0",
+                "https://resa3.yeu-continent.fr/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + this.trajetControleur.getIdVoyagesNbPlacesYC(this.trajetSouhaite),
+                "https://resa3.yeu-continent.fr/ws/?&func=liste_dates&num_voyage=0",
+                "https://resa3.yeu-continent.fr/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + this.sdfDateCollee.format(this.dateTraversees),
+                "https://resa3.yeu-continent.fr/ws/?&func=liste_horaires&num_voyage=0&num_passage=0",
                 "https://resa-prod.compagnie-vendeenne.com/ws/?&func=set_id_voyage&num_voyage=0&id_voyage=" + this.trajetControleur.getIdVoyagesNbPlacesVendeenne(this.trajetSouhaite),
                 "https://resa-prod.compagnie-vendeenne.com/ws/?&func=liste_dates&num_voyage=0",
                 "https://resa-prod.compagnie-vendeenne.com/ws/?&func=set_date_depart&num_voyage=0&num_passage=0&date_depart=" + this.sdfDateCollee.format(this.dateTraversees),
